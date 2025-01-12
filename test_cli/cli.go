@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 )
+var tasks = LoadTasks()
 
 func List (tasks []Task){ 
 	fmt.Println("id | name | status | createTime | updateTime")
@@ -11,14 +12,16 @@ func List (tasks []Task){
 		fmt.Println(task.ID, task.Name, task.Status, task.CreateTime, task.UpdateTime)
 	}
 }
+func Add (tasks *[]Task , task_name string){ 
+	fmt.Println("Task Add Success! Task Name: ", task_name)
+	*tasks = append(*tasks, Task{ID: len(*tasks)+1, Name: task_name, Status: "todo", CreateTime: "2021-09-01 12:00:00", UpdateTime: "2021-09-01 12:00:00"})
+	SaveTasks(*tasks)
+}
 
 func main(){
-	// tasks init
-	tasks := TaskListInit()
-    // 定義子命令
     // 檢查是否有子命令
     if len(os.Args) < 2 {
-        fmt.Println("預期有 'list' 子命令")
+        fmt.Println("subcommand is required")
         os.Exit(1)
     }
 
@@ -27,9 +30,14 @@ func main(){
     case "list":
 		List(tasks)
 	case "add":
-		fmt.Println("add")
+		if len(os.Args)<3 {
+			fmt.Println("task name is required!")
+			os.Exit(1)
+		}
+		task_name := os.Args[2]
+		Add(&tasks,task_name)
     default:
-        fmt.Println("未知的子命令")
+        fmt.Println("unknown command")
         os.Exit(1)
     }
 }

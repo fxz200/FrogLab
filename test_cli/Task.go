@@ -1,5 +1,11 @@
 package main
 
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
+
 /**
 task:{
 	{
@@ -19,11 +25,31 @@ type Task struct {
 	UpdateTime string
 }
 
-func TaskListInit() []Task {
-	tasks := []Task{
-		{1, "task1", "todo", "2021-09-01 12:00:00", "2021-09-01 12:00:00"},
-		{2, "task2", "done", "2021-09-01 12:00:00", "2021-09-01 12:00:00"},
-		{3, "task3", "inprogress", "2021-09-01 12:00:00", "2021-09-01 12:00:00"},
-	}
-	return tasks
+
+func SaveTasks(tasks []Task) {
+	//err 變數會儲存任何可能發生的錯誤
+    data, err := json.Marshal(tasks)
+    if err != nil {
+        fmt.Println("save error:", err)
+        return
+    }
+	//0644是文件的權限設置
+    err = os.WriteFile("tasks.json", data, 0644)
+    if err != nil {
+        fmt.Println("write error:", err)
+    }
+}
+func LoadTasks() []Task {
+    data, err := os.ReadFile("tasks.json")
+    if err != nil {
+        fmt.Println("read error:", err)
+
+    }
+    var tasks []Task
+    err = json.Unmarshal(data, &tasks)
+    if err != nil {
+        fmt.Println("解析任務列表錯誤:", err)
+
+    }
+    return tasks
 }
