@@ -19,13 +19,11 @@ func Add (tasks *[]Task , task_name string){
 }
 
 func main(){
-    // 檢查是否有子命令
     if len(os.Args) < 2 {
         fmt.Println("subcommand is required")
         os.Exit(1)
     }
 
-    // 解析子命令
     switch os.Args[1] {
     case "list":
 		List(tasks)
