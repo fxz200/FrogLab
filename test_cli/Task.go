@@ -43,13 +43,11 @@ func LoadTasks() []Task {
     data, err := os.ReadFile("tasks.json")
     if err != nil {
         fmt.Println("read error:", err)
-
     }
     var tasks []Task
     err = json.Unmarshal(data, &tasks)
     if err != nil {
         fmt.Println("解析任務列表錯誤:", err)
-
     }
     return tasks
 }
