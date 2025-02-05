@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 var tasks = LoadTasks()
 
@@ -14,7 +15,7 @@ func List (tasks []Task){
 }
 func Add (tasks *[]Task , task_name string){ 
 	fmt.Println("Task Add Success! Task Name: ", task_name)
-	*tasks = append(*tasks, Task{ID: len(*tasks)+1, Name: task_name, Status: "todo", CreateTime: "2021-09-01 12:00:00", UpdateTime: "2021-09-01 12:00:00"})
+	*tasks = append(*tasks, Task{ID: len(*tasks)+1, Name: task_name, Status: "todo", CreateTime: time.Now().Format("2006-01-02 15:04:05"), UpdateTime: time.Now().Format("2006-01-02 15:04:05")})
 	SaveTasks(*tasks)
 }
 
