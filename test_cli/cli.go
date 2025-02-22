@@ -33,15 +33,22 @@ func Edit (tasks *[]Task, task_name string){
 	fmt.Println("Wrong Task Name!")
 }
 func Delete (tasks *[]Task, task_name string){ 
-	fmt.Println("Task Delete Success! Task Name: ", task_name)
 	j := 0
+	found := false
 	for _,task := range *tasks {
 		if task.Name != task_name {
 			(*tasks)[j] = task
 			j++
+		}else{
+			found = true
 		}
 	}
-	SaveTasks((*tasks)[:j])
+	if found {
+        fmt.Println("Task Delete Success! Task Name: ", task_name)
+        SaveTasks((*tasks)[:j])
+    } else {
+        fmt.Println("Task Delete Failed! Task Name not found")
+    }
 }
 
 
