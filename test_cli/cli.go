@@ -6,10 +6,28 @@ import (
 	"time"
 )
 var tasks = LoadTasks()
-func List (tasks []Task){ 
+func List (tasks []Task , status string){ 
 	fmt.Println("id | name | status | createTime | updateTime")
 	for _,task := range tasks {
-		fmt.Println(task.ID, task.Name, task.Status, task.CreateTime, task.UpdateTime)
+		switch status{
+		case "todo":
+			if task.Status == "todo" {
+				fmt.Println(task.ID, task.Name, task.Status, task.CreateTime, task.UpdateTime)
+			}
+		case "ongoing":
+			if task.Status == "ongoing" {
+				fmt.Println(task.ID, task.Name, task.Status, task.CreateTime, task.UpdateTime)
+			}
+		case "done":
+			if task.Status == "done" {
+				fmt.Println(task.ID, task.Name, task.Status, task.CreateTime, task.UpdateTime)
+			}
+		case "all":
+			fmt.Println(task.ID, task.Name, task.Status, task.CreateTime, task.UpdateTime)
+		default:
+			fmt.Println("Wrong Status!")
+		}
+		
 	}
 }
 func Add (tasks *[]Task , task_name string){ 
@@ -69,7 +87,13 @@ func main(){
 
     switch os.Args[1] {
     case "list":
-		List(tasks)
+		if len(os.Args)<3 {
+			status := "all"
+			List(tasks,status)
+		}else{
+			status := os.Args[2]
+			List(tasks,status)
+		}
 	case "add":
 		if len(os.Args)<3 {
 			fmt.Println("task name is required!")
