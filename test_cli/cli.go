@@ -17,11 +17,19 @@ func Add (tasks *[]Task , task_name string){
 	*tasks = append(*tasks, Task{ID: len(*tasks)+1, Name: task_name, Status: "todo", CreateTime: time.Now().Format("2006-01-02 15:04:05"), UpdateTime: time.Now().Format("2006-01-02 15:04:05")})
 	SaveTasks(*tasks)
 }
-func Edit (tasks *[]Task, task_name string){
+func Update (tasks *[]Task, task_name string){
 	j:=0
 	for _,task := range *tasks {
 		if task.Name == task_name {
-			task.Status = "done"
+			switch(task.Status){
+			case "todo":
+				task.Status = "ongoing"
+			case "ongoing":
+				task.Status = "done"
+			case "done":
+				fmt.Println("Task is already done!")
+				return
+			}
 			task.UpdateTime = time.Now().Format("2006-01-02 15:04:05")
 			(*tasks)[j] = task
 			SaveTasks((*tasks))
@@ -76,13 +84,13 @@ func main(){
 		}
 		task_name := os.Args[2]
 		Delete(&tasks,task_name)
-	case "edit":
+	case "update":
 		if len(os.Args)<3 {
 			fmt.Println("task name is required!")
 			os.Exit(1)
 		}
 		task_name := os.Args[2]
-		Edit(&tasks,task_name)
+		Update(&tasks,task_name)
     default:
         fmt.Println("unknown command")
         os.Exit(1)
