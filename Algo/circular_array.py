@@ -64,33 +64,33 @@ class CycleArray:
             raise Exception("Array is empty")
         return self.arr[(self.end-1+self.size)%self.size]
     
-    
-arr = CycleArray(6)
-arr.add_last(1)
-arr.add_last(2)
-#[1, 2, _, _, _, _]
+if __name__ == "__main__":   
+    arr = CycleArray(6)
+    arr.add_last(1)
+    arr.add_last(2)
+    #[1, 2, _, _, _, _]
 
-arr.add_first(3)
-#[1, 2, _, _, _, 3]
+    arr.add_first(3)
+    #[1, 2, _, _, _, 3]
 
-arr.add_first(4)
-#[1, 2, _, _, 4, 3]
+    arr.add_first(4)
+    #[1, 2, _, _, 4, 3]
 
-first = arr.get_first() #4
-last = arr.get_last() #2
-print(first)
-print(last)
-arr.add_first(5)
-#[1, 2, _, 5, 4, 3]
+    first = arr.get_first() #4
+    last = arr.get_last() #2
+    print(first)
+    print(last)
+    arr.add_first(5)
+    #[1, 2, _, 5, 4, 3]
 
-arr.remove_last()
-#[1, _, _, 5, 4, 3]
+    arr.remove_last()
+    #[1, _, _, 5, 4, 3]
 
-arr.remove_first()
-#[1, _, _, _, 4, 3]
+    arr.remove_first()
+    #[1, _, _, _, 4, 3]
 
-arr.remove_last()
-#[_, _, _, _, 4, 3]
+    arr.remove_last()
+    #[_, _, _, _, 4, 3]
 
-arr.remove_last()
-#[_, _, _, _, 4, _]
+    arr.remove_last()
+    #[_, _, _, _, 4, _]
